@@ -23,15 +23,15 @@ class MailboxViewController: UIViewController {
     var trayLeft: CGPoint!
     
     var rescheduleIconOriginalCenter: CGPoint!
+    var rescheduleIconNewCenter: CGPoint!
     
     //Icon Variables
     @IBOutlet weak var rescheduleIcon: UIImageView!
-    @IBOutlet weak var listIcon: UIImageView!
+    @IBOutlet weak var deleteIcon: UIImageView!
+    @IBOutlet weak var feedImage: UIImageView!
     var listImage: UIImage!
     
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +40,7 @@ class MailboxViewController: UIViewController {
         feedScrollView.contentSize = CGSize(width: 375, height: 1805)
         
         rescheduleOptions.alpha = 0.0
+        rescheduleIconOriginalCenter = rescheduleIcon.center
         listImage = UIImage(named: "list_icon")
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didSwipeMessage(_:)))
@@ -49,9 +50,10 @@ class MailboxViewController: UIViewController {
         messageView.addGestureRecognizer(panGestureRecognizer)
 
         // Dictates how the message moves left to right
-        traySideOffset = 200
+        traySideOffset = 400
         trayRight = CGPoint(x: messageView.center.x + traySideOffset, y: messageView.center.y)
         trayLeft = CGPoint(x: messageView.center.x - traySideOffset, y: messageView.center.y)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,25 +68,27 @@ class MailboxViewController: UIViewController {
         _ = sender.velocity(in: view)
         let translation = sender.translation(in: view)
 
+        
         print("translation \(translation)")
         print("reschedule icon \(rescheduleIcon.center)")
         
         if sender.state == .began {
             print("Gesture began")
             trayOriginalCenter = messageView.center
-            rescheduleIconOriginalCenter = rescheduleIcon.center
+            
+            rescheduleIconNewCenter = rescheduleIcon.center
             
             //  As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
             
             //set the alpha to initially be semi-transparent
             self.rescheduleIcon.alpha = 0.3
             self.remindView.alpha = 0.0
-            self.listIcon.alpha = 0.0
+            self.deleteIcon.alpha = 0.0
             
-            //dragging left will make the remindView fully opaque
+            //dragging left
             if translation.x < 0 {
               
-                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in
                 })
                 
             }
@@ -93,28 +97,27 @@ class MailboxViewController: UIViewController {
             
             messageView.center = CGPoint(x: trayOriginalCenter.x + translation.x, y: trayOriginalCenter.y)
             
+            //at 260pts, changes background color to brown and swaps out the reschedule icon with list icon
             if translation.x < -260{
                 print("hello")
-                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.backgroundColor = UIColor.brown; self.rescheduleIcon.image = self.listImage}, completion: { (nil) in
+                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.backgroundColor = UIColor.brown; self.rescheduleIcon.image = self.listImage}, completion: { finished in self.displayRescheduleOptions()
                 })
             }
             //at 60 points icon moves with transition
             else if translation.x < -60 {
                 
-                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0; self.rescheduleIcon.center = CGPoint(x: self.rescheduleIconOriginalCenter.x + (translation.x + 60), y: self.rescheduleIconOriginalCenter.y)}, completion: { (nil) in
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0; self.rescheduleIcon.center = CGPoint(x: self.rescheduleIconNewCenter.x + (translation.x + 60), y: self.rescheduleIconNewCenter.y)}, completion: { finished in
                 })
             }
 
             
             
         } else if sender.state == .ended {
-            print("Gesture ended")
             
             if translation.x > 0 {
                 UIView.animate(withDuration: 0.3) {
                     self.messageView.center = self.trayRight
-                    
-                        //  change background color
+
                 
                 }
             } else {
@@ -123,19 +126,32 @@ class MailboxViewController: UIViewController {
                     self.messageView.center = self.trayLeft
                     
                     //if gesture ends before the midpoint of the width, readjust the center point to be center of frame and snap the view back to center
-                    if translation.x < 10 {
+                    if translation.x > -260 {
                         self.messageView.center = self.trayOriginalCenter
+                    } else {
+                        self.messageView.center = self.trayLeft
                     }
 
-                    
-                    
-                
                 }
             }
-
+            print("Gesture ended")
+            
+            UIView.animate(withDuration: 0.0, delay: 1.0, options:[], animations: {self.rescheduleIcon.center = self.rescheduleIconOriginalCenter; self.rescheduleIcon.alpha = 0}, completion: nil)
         }
     }
+    
+    //animation to display the reschedule options screen
+    func displayRescheduleOptions(){
+        
+        UIView.animate(withDuration: 0.2, delay: 0.5, options: [], animations: {self.rescheduleOptions.alpha = 1.0}, completion: nil)
+    }
+    
 
+    @IBAction func didTapOptions(_ sender: UITapGestureRecognizer) {
+        remindView.alpha = 0
+        UIView.animate(withDuration: 0.3, animations: {self.rescheduleOptions.alpha = 0.0})
+        UIView.animate(withDuration: 0.4, animations: {self.feedImage.center.y -= 100})
+    }
     /*
     // MARK: - Navigation
 

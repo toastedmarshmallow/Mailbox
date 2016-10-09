@@ -22,6 +22,8 @@ class MailboxViewController: UIViewController {
     var trayRight: CGPoint!
     var trayLeft: CGPoint!
     
+    var rescheduleIconOriginalCenter: CGPoint!
+    
     //Icon Variables
     @IBOutlet weak var rescheduleIcon: UIImageView!
     
@@ -32,7 +34,7 @@ class MailboxViewController: UIViewController {
         
         feedScrollView.contentSize = CGSize(width: 375, height: 1805)
         
-        // The didPan: method will be defined in Step 3 below.
+        rescheduleOptions.alpha = 0.0
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didSwipeMessage(_:)))
         
@@ -59,12 +61,14 @@ class MailboxViewController: UIViewController {
         let translation = sender.translation(in: view)
 
         print("translation \(translation)")
+        print("reschedule icon \(rescheduleIcon.center)")
         
         if sender.state == .began {
             print("Gesture began")
             trayOriginalCenter = messageView.center
+            rescheduleIconOriginalCenter = rescheduleIcon.center
             
-            //                As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
+            //  As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
             
             //set the alpha to initially be semi-transparent
             self.rescheduleIcon.alpha = 0.3
@@ -72,10 +76,6 @@ class MailboxViewController: UIViewController {
             
             //dragging left will make the remindView fully opaque
             if translation.x < 0 {
-                //                UIView.animate(withDuration: 0.3) {
-                //                    UIViewAnimationOptions.allowUserInteraction
-                //                    self.rescheduleIcon.alpha = 1.0
-                //                }
               
                 UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in
                 })
@@ -86,10 +86,15 @@ class MailboxViewController: UIViewController {
             
             messageView.center = CGPoint(x: trayOriginalCenter.x + translation.x, y: trayOriginalCenter.y)
             
-            print("hello")
-            if translation.x < (-60) {
+            if translation.x < -260{
+                print("hello")
+                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.backgroundColor = UIColor.brown}, completion: { (nil) in
+                })
+            }
+            //at 60 points icon moves with transition
+            if translation.x < -60 {
                 
-                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0}, completion: { (nil) in
+                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0; self.rescheduleIcon.center = CGPoint(x: self.rescheduleIconOriginalCenter.x + (translation.x + 60), y: self.rescheduleIconOriginalCenter.y)}, completion: { (nil) in
                 })
             }
 
@@ -102,7 +107,7 @@ class MailboxViewController: UIViewController {
                 UIView.animate(withDuration: 0.3) {
                     self.messageView.center = self.trayRight
                     
-                        //                     change background color
+                        //  change background color
                 
                 }
             } else {

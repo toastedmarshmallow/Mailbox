@@ -22,28 +22,19 @@
                                         <rect key="frame" x="0.0" y="102" width="375" height="1403"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" misplaced="YES" id="IGH-h3-aHB">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="delete_icon" id="dGJ-fx-p7Q">
-                                                <frame key="frameInset" minX="11" minY="38" width="25" height="25"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.17966585869999999" green="0.81488381409999999" blue="0.28445389789999997" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
                                     <view contentMode="scaleToFill" misplaced="YES" id="504-Sz-wwl">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="later_icon" id="NIb-GV-N3V">
-                                                <frame key="frameInset" minX="320" minY="35" width="30" height="30"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </imageView>
-                                        </subviews>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.84313725490000002" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="delete_icon" id="dGJ-fx-p7Q">
+                                        <rect key="frame" x="11" y="38" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="later_icon" id="NIb-GV-N3V">
+                                        <rect key="frame" x="320" y="38" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                     <view contentMode="scaleToFill" misplaced="YES" id="e29-Gn-JYM">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -72,17 +63,21 @@
                                 <frame key="frameInset" minY="110" width="377" height="49"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" misplaced="YES" image="reschedule" id="2Af-vk-1cX">
+                                <frame key="frameInset" width="375" height="665"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1575"/>
                     <connections>
-                        <outlet property="deleteView" destination="IGH-h3-aHB" id="Xv9-5C-Ngv"/>
                         <outlet property="feedScrollView" destination="hbk-ri-Zsl" id="ecp-4B-muO"/>
                         <outlet property="messageView" destination="e29-Gn-JYM" id="Xgb-Eu-nxE"/>
                         <outlet property="remindView" destination="504-Sz-wwl" id="jZE-0i-8nr"/>
                         <outlet property="rescheduleIcon" destination="NIb-GV-N3V" id="dfU-yv-wBj"/>
+                        <outlet property="rescheduleOptions" destination="2Af-vk-1cX" id="Inm-ls-lJo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -103,6 +98,7 @@
         <image name="later_icon" width="25" height="25"/>
         <image name="message" width="320" height="86"/>
         <image name="nav" width="320" height="65"/>
+        <image name="reschedule" width="320" height="568"/>
         <image name="search" width="320" height="42"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

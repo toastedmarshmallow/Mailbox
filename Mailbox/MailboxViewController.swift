@@ -11,10 +11,10 @@ import UIKit
 class MailboxViewController: UIViewController {
 
     //View Variables
-    @IBOutlet weak var deleteView: UIView!
     @IBOutlet weak var remindView: UIView!
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var feedScrollView: UIScrollView!
+    @IBOutlet weak var rescheduleOptions: UIImageView!
     
     //Math Variables
     var trayOriginalCenter: CGPoint!
@@ -64,23 +64,36 @@ class MailboxViewController: UIViewController {
             print("Gesture began")
             trayOriginalCenter = messageView.center
             
+            //                As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
+            
+            //set the alpha to initially be semi-transparent
+            self.rescheduleIcon.alpha = 0.3
+            self.remindView.alpha = 0.0
+            
+            //dragging left will make the remindView fully opaque
+            if translation.x < 0 {
+                //                UIView.animate(withDuration: 0.3) {
+                //                    UIViewAnimationOptions.allowUserInteraction
+                //                    self.rescheduleIcon.alpha = 1.0
+                //                }
+              
+                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in
+                })
+                
+            }
         } else if sender.state == .changed {
             print("Gesture is changing")
             
             messageView.center = CGPoint(x: trayOriginalCenter.x + translation.x, y: trayOriginalCenter.y)
             
-            //                As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
-            
-            //set the alpha to initially be semi-transparent
-            self.rescheduleIcon.alpha = 0.3
-            self.remindView.backgroundColor = UIColor.gray
-            
-            //dragging left will make the remindView fully opaque
-            if translation.x < 0 {
-                UIView.animate(withDuration: 0.3) {
-                    self.rescheduleIcon.alpha = 1.0
-                }
+            print("hello")
+            if translation.x < (-60) {
+                
+                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0}, completion: { (nil) in
+                })
             }
+
+            
             
         } else if sender.state == .ended {
             print("Gesture ended")

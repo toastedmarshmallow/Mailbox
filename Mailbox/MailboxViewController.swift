@@ -26,6 +26,11 @@ class MailboxViewController: UIViewController {
     
     //Icon Variables
     @IBOutlet weak var rescheduleIcon: UIImageView!
+    @IBOutlet weak var listIcon: UIImageView!
+    var listImage: UIImage!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +40,7 @@ class MailboxViewController: UIViewController {
         feedScrollView.contentSize = CGSize(width: 375, height: 1805)
         
         rescheduleOptions.alpha = 0.0
+        listImage = UIImage(named: "list_icon")
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didSwipeMessage(_:)))
         
@@ -73,6 +79,7 @@ class MailboxViewController: UIViewController {
             //set the alpha to initially be semi-transparent
             self.rescheduleIcon.alpha = 0.3
             self.remindView.alpha = 0.0
+            self.listIcon.alpha = 0.0
             
             //dragging left will make the remindView fully opaque
             if translation.x < 0 {
@@ -88,11 +95,11 @@ class MailboxViewController: UIViewController {
             
             if translation.x < -260{
                 print("hello")
-                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.backgroundColor = UIColor.brown}, completion: { (nil) in
+                UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.backgroundColor = UIColor.brown; self.rescheduleIcon.image = self.listImage}, completion: { (nil) in
                 })
             }
             //at 60 points icon moves with transition
-            if translation.x < -60 {
+            else if translation.x < -60 {
                 
                 UIView.animate(withDuration: 0.7, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.remindView.alpha = 1.0; self.rescheduleIcon.center = CGPoint(x: self.rescheduleIconOriginalCenter.x + (translation.x + 60), y: self.rescheduleIconOriginalCenter.y)}, completion: { (nil) in
                 })

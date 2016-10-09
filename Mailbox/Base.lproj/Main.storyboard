@@ -27,6 +27,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.84313725490000002" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="list_icon" id="Dpb-eg-Cq7">
+                                        <rect key="frame" x="100" y="38" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="delete_icon" id="dGJ-fx-p7Q">
                                         <rect key="frame" x="11" y="38" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -74,6 +78,7 @@
                     <size key="freeformSize" width="375" height="1575"/>
                     <connections>
                         <outlet property="feedScrollView" destination="hbk-ri-Zsl" id="ecp-4B-muO"/>
+                        <outlet property="listIcon" destination="Dpb-eg-Cq7" id="h9D-Px-ZeP"/>
                         <outlet property="messageView" destination="e29-Gn-JYM" id="Xgb-Eu-nxE"/>
                         <outlet property="remindView" destination="504-Sz-wwl" id="jZE-0i-8nr"/>
                         <outlet property="rescheduleIcon" destination="NIb-GV-N3V" id="dfU-yv-wBj"/>
@@ -96,6 +101,7 @@
         <image name="feed" width="320" height="1202"/>
         <image name="help_label" width="320" height="37"/>
         <image name="later_icon" width="25" height="25"/>
+        <image name="list_icon" width="25" height="25"/>
         <image name="message" width="320" height="86"/>
         <image name="nav" width="320" height="65"/>
         <image name="reschedule" width="320" height="568"/>

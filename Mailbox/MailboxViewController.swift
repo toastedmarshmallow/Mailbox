@@ -58,7 +58,7 @@ class MailboxViewController: UIViewController {
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didSwipeMessage(_:)))
         
-        // Attach it to a view of your choice. If it's a UIImageView, remember to enable user interaction
+        // Attaching gesture recognizer to message view
         messageView.isUserInteractionEnabled = true
         messageView.addGestureRecognizer(panGestureRecognizer)
 
@@ -83,14 +83,11 @@ class MailboxViewController: UIViewController {
 
         
         print("translation \(translation)")
-        print("reschedule icon \(rescheduleIcon.center)")
         
         if sender.state == .began {
             print("Gesture began")
             trayOriginalCenter = messageView.center
-            
             rescheduleIconNewCenter = rescheduleIcon.center
-            
             archiveIconNewCenter = archiveIcon.center
             
             //  As the reschedule icon is revealed, it should start semi-transparent and become fully opaque. If released at this point, the message should return to its initial position.
@@ -104,8 +101,7 @@ class MailboxViewController: UIViewController {
             if translation.x < 0 {
                 self.rescheduleIcon.alpha = 0.3
                 
-                UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in
-                })
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.rescheduleIcon.alpha = 1.0}, completion: { (nil) in})
                 
             } else{
             //dragging right
@@ -127,12 +123,14 @@ class MailboxViewController: UIViewController {
             UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.archiveView.alpha = 1.0}, completion: { finished in})
             
                 //between 60 and 260, icon moves and background changes green to red
-                if translation.x > 260 {
-                    UIView.animate(withDuration: 0.3, animations: {self.archiveView.backgroundColor = UIColor(red:0.66, green:0.06, blue:0.06, alpha:1.0); self.archiveIcon.image = self.deleteIcon}, completion: {finished in})
-                } else if translation.x > 60{
+               if translation.x > 60{
                     
                     UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: {self.archiveIcon.center = CGPoint(x: self.archiveIconNewCenter.x + (translation.x - 60), y: self.archiveIconNewCenter.y)}, completion: { finished in})
-                    
+                
+                    if translation.x > 260 {
+                        UIView.animate(withDuration: 0.3, animations: {self.archiveView.backgroundColor = UIColor(red:0.66, green:0.06, blue:0.06, alpha:1.0); self.archiveIcon.image = self.deleteIcon}, completion: {finished in})
+                    }
+                
                 }
             
             }
@@ -166,7 +164,10 @@ class MailboxViewController: UIViewController {
                 if translation.x > 260 {
                     UIView.animate(withDuration: 0.3, animations: {self.messageView.center = self.trayRight}, completion: {finished in self.moveFeedView()
                         self.archiveView.alpha = 0.0
-                        self.archiveIcon.alpha = 0.0})
+                        self.archiveIcon.alpha = 0.0
+                    
+                        UIView.animate(withDuration: 0.0, delay: 2.0, options: [], animations: {self.reset()}, completion: ({finished in}))})
+
                 }
                 
             }else {
@@ -187,7 +188,7 @@ class MailboxViewController: UIViewController {
             }
             print("Gesture ended")
             
-            UIView.animate(withDuration: 0.0, delay: 2.0, options:[], animations: {self.rescheduleIcon.center = self.rescheduleIconOriginalCenter; self.archiveIcon.center = self.archiveIconOriginalCenter}, completion: {finished in self.reset()})
+            UIView.animate(withDuration: 0.0, delay: 2.0, options:[], animations: {self.rescheduleIcon.center = self.rescheduleIconOriginalCenter; self.archiveIcon.center = self.archiveIconOriginalCenter}, completion: {finished in})
         }
     }
     
@@ -199,12 +200,11 @@ class MailboxViewController: UIViewController {
     
     func moveFeedView(){
         UIView.animate(withDuration: 0.4, animations: {self.feedImage.center.y -= 100})
-        //self.reset()
-        
     }
     
     func reset(){
         messageView.center = trayOriginalCenter
+        self.feedImage.center.y += 100
         
         //resetting alphas
         self.rescheduleIcon.alpha = 0.0
@@ -222,15 +222,13 @@ class MailboxViewController: UIViewController {
         
         self.rescheduleIcon.center = self.rescheduleIconOriginalCenter
         self.archiveIcon.center = self.archiveIconOriginalCenter
-        
-        //self.feedImage.center.y += 100
     }
     
 
     @IBAction func didTapOptions(_ sender: UITapGestureRecognizer) {
         remindView.alpha = 0
-        UIView.animate(withDuration: 0.3, animations: {self.rescheduleOptions.alpha = 0.0})
-        moveFeedView()
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [], animations: {self.rescheduleOptions.alpha = 0.0}, completion: {finished in self.moveFeedView()
+        UIView.animate(withDuration: 0.0, delay: 2.0, options: [], animations: {self.reset()}, completion: ({finished in}))})
     }
     /*
     // MARK: - Navigation

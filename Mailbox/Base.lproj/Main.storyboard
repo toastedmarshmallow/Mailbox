@@ -28,6 +28,12 @@
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.84313725490000002" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="delete_icon" id="dGJ-fx-p7Q">
+                                    <view contentMode="scaleToFill" misplaced="YES" id="VUd-1v-77t">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.17966585869999999" green="0.81488381409999999" blue="0.28445389789999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="archive_icon" id="dGJ-fx-p7Q">
                                         <rect key="frame" x="11" y="38" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
@@ -77,6 +83,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1575"/>
                     <connections>
+                        <outlet property="archiveIcon" destination="dGJ-fx-p7Q" id="bhi-Wy-mdx"/>
+                        <outlet property="archiveView" destination="VUd-1v-77t" id="PCA-K8-hwF"/>
                         <outlet property="deleteIcon" destination="dGJ-fx-p7Q" id="XM5-fR-bVa"/>
                         <outlet property="feedImage" destination="jPl-E9-txa" id="Ebq-qZ-JJy"/>
                         <outlet property="feedScrollView" destination="hbk-ri-Zsl" id="ecp-4B-muO"/>
@@ -103,7 +111,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="delete_icon" width="25" height="25"/>
+        <image name="archive_icon" width="25" height="25"/>
         <image name="feed" width="320" height="1202"/>
         <image name="help_label" width="320" height="37"/>
         <image name="later_icon" width="25" height="25"/>

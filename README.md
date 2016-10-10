@@ -55,6 +55,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Would loved to have had more time to clean up my code - I'm sure I have redundant code as I didn't plan it out very well. Keeping track of alphas and settings were a little difficult.
+Would loved to have had more time to clean up my code - I'm sure I have redundant code as I didn't plan it out very well. Keeping track of alphas and settings were a little difficult. While it doesn't look like it, the yellow does turn to brown on dragging left... the options show up so fast. I included a delay in displaying the reschedule optiosn to show the brown color.
+
+<img src = 'https://github.com/toastedmarshmallow/Mailbox/blob/master/mailbox_delay.gif'/>
+
 
 * Any libraries or borrowed content.

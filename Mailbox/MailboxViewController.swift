@@ -195,7 +195,7 @@ class MailboxViewController: UIViewController {
     //animation to display the reschedule options screen
     func displayRescheduleOptions(){
         
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: [], animations: {self.rescheduleOptions.alpha = 1.0; self.rescheduleIcon.alpha = 0}, completion: nil)
+        UIView.animate(withDuration: 0.2, delay: 2.0, options: [], animations: {self.rescheduleOptions.alpha = 1.0; self.rescheduleIcon.alpha = 0}, completion: nil)
     }
     
     func moveFeedView(){
